@@ -3,14 +3,14 @@ package model;
 public class Product {
     private int id;
     private String name;
-    private String vendor;
+//    private String vendor;
     private String description;
     private long price;
 
-    public Product(String name, String vendor, String description, long price) {
+    public Product(int id, String name, String description, long price) {
         this.id = id;
         this.name = name;
-        this.vendor = vendor;
+//        this.vendor = vendor;
         this.description = description;
         this.price = price;
     }
@@ -31,13 +31,13 @@ public class Product {
         this.name = name;
     }
 
-    public String getVendor() {
-        return vendor;
-    }
-
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
-    }
+//    public String getVendor() {
+//        return vendor;
+//    }
+//
+//    public void setVendor(String vendor) {
+//        this.vendor = vendor;
+//    }
 
     public String getDescription() {
         return description;
@@ -45,5 +45,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
     }
 }
