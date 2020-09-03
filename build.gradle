@@ -25,6 +25,10 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
+    providedCompile group: 'javax.servlet.jsp', name: 'javax.servlet.jsp-api', version: '2.2.1'
+    compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+
 }
 
 test {
