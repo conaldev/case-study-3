@@ -1,9 +1,8 @@
-package service;
+package dao.service;
 
 import model.Product;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Products {
     private static Products products = new Products();
