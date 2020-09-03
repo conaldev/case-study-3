@@ -5,12 +5,14 @@ public class Product {
     private String name;
     private String vendor;
     private String description;
+    private long price;
 
-    public Product(int id, String name, String vendor, String description) {
+    public Product(String name, String vendor, String description, long price) {
         this.id = id;
         this.name = name;
         this.vendor = vendor;
         this.description = description;
+        this.price = price;
     }
 
     public int getId() {
