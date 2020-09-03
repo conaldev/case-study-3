@@ -1,5 +1,6 @@
 package model;
 
+<<<<<<< HEAD
 import java.util.Date;
 
 public class User {
@@ -56,4 +57,7 @@ public class User {
     public void setCreated(Date created) {
         this.created = created;
     }
+=======
+public class gitUser {
+>>>>>>> 0fa188d29eb8516a58dc5e51a0a893926bfa0037
 }
