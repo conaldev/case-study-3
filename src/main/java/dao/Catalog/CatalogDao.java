@@ -1,12 +1,13 @@
-package dao;
+package dao.Catalog;
 
+import dao.JDBCConnection;
 import model.Catalog;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CatalogDao implements IDAO<Catalog> {
+public class CatalogDao implements ICatalogDao {
 
     private  static final String INSERT_CATALOG = "INSERT INTO catalog" +
             " (id, name) VALUES" +"(?,?);";
@@ -70,5 +71,10 @@ public class CatalogDao implements IDAO<Catalog> {
             rowDeleted = statement.executeUpdate() > 0;
         }
         return rowDeleted;
+    }
+
+    @Override
+    public Catalog selectById(int id) {
+        return null;
     }
 }

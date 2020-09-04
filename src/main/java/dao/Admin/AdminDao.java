@@ -1,5 +1,6 @@
-package dao;
+package dao.Admin;
 
+import dao.JDBCConnection;
 import model.Admin;
 
 import java.sql.Connection;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminDao implements IDAO<Admin> {
+public class AdminDao implements IAdminDao {
     private static final String INSERT_ADMIN_SQL = "insert into admin" + 
             "(id, name,userName, passWord) VALUES" + "(?,?,?,?)";
     private static final String SELECT_ALL_ADMIN = "select * from admin;";
@@ -73,5 +74,10 @@ public class AdminDao implements IDAO<Admin> {
             rowDeleted = statement.executeUpdate() > 0;
         }
         return rowDeleted;
+    }
+
+    @Override
+    public Admin selectById(int id) {
+        return null;
     }
 }

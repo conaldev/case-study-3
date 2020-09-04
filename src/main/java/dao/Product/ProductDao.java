@@ -1,18 +1,19 @@
-package dao;
+package dao.Product;
 
+import dao.JDBCConnection;
 import model.Product;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDao implements IDAO<Product> {
-    private static final String INSERT_USERS_SQL = "INSERT INTO product" +
+public class ProductDao implements IProductDao {
+    private static final String INSERT_PRODUCT_SQL = "INSERT INTO product" +
             " (id, name,description, price) VALUES" +"(?,?,?,?);";
-    //    private static final String SELECT_USER_BY_ID = "select id,name,email,country from users where id =?";
-    private static final String SELECT_ALL_USERS = "select * from product;";
-    private static final String DELETE_USERS_SQL = "delete from product where id = ?;";
-    private static final String UPDATE_USERS_SQL = "update product set " +
+    private static final String SELECT_PRODUCT_BY_ID = "select * from product where id =?";
+    private static final String SELECT_ALL_PRODUCT = "select * from product;";
+    private static final String DELETE_PRODUCT_SQL = "delete from product where id = ?;";
+    private static final String UPDATE_PRODUCT_SQL = "update product set " +
             " (id, name, description, price) VALUES" +"(?,?,?,?);";
 //    private static final String FIND_USER_BY_COUNTRY = "select * from product where country = ?;";
 //    private static final String SORT_BY_NAME = "select * from product order by name;";
@@ -22,7 +23,7 @@ public class ProductDao implements IDAO<Product> {
         List<Product> products = new ArrayList<>();
         try(
                 Connection connection = JDBCConnection.getJDBCConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);){
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PRODUCT);){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
                 int id = rs.getInt("id");
@@ -41,7 +42,7 @@ public class ProductDao implements IDAO<Product> {
     @Override
     public void insert(Product product) {
         try (Connection connection = JDBCConnection.getJDBCConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);){
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PRODUCT_SQL);){
             preparedStatement.setInt(1,product.getId());
             preparedStatement.setString(2,product.getName());
             preparedStatement.setString(3,product.getDescription());
@@ -57,7 +58,7 @@ public class ProductDao implements IDAO<Product> {
     public boolean update(Product product) throws SQLException {
         boolean rowUpdate;
         try(Connection connection = JDBCConnection.getJDBCConnection();
-            PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
+            PreparedStatement statement = connection.prepareStatement(UPDATE_PRODUCT_SQL);) {
             statement.setInt(1,product.getId());
             statement.setString(2,product.getName());
             statement.setString(3,product.getDescription());
@@ -71,11 +72,30 @@ public class ProductDao implements IDAO<Product> {
     public boolean delete(int id) throws SQLException {
         boolean rowDeleted;
         try (Connection connection = JDBCConnection.getJDBCConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL);){
+             PreparedStatement statement = connection.prepareStatement(DELETE_PRODUCT_SQL);){
             statement.setInt(1,id);
             rowDeleted = statement.executeUpdate() > 0;
         }
         return rowDeleted;
+    }
+
+    @Override
+    public Product selectById(int id) {
+        Product products = null ;
+        try(Connection connection = JDBCConnection.getJDBCConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT_BY_ID);){
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                long price = rs.getLong("price");
+                products = new Product(id,name,description,price);
+            }
+        } catch (SQLException ex){
+            printSQLException(ex);
+        }
+        return products;
     }
 
     private void printSQLException(SQLException ex) {

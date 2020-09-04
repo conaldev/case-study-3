@@ -19,11 +19,11 @@ public class JDBCConnection {
         return connection;
     }
 
-//    public static void main(String[] args) {
-//        Connection connection = getJDBCConnection();
-//        if (connection != null )
-//            System.out.println("Thanh cong");
-//                else
-//                    System.out.println("that bai");
-//    }
+    public static void main(String[] args) {
+        Connection connection = getJDBCConnection();
+        if (connection != null )
+            System.out.println("Thanh cong");
+                else
+                    System.out.println("that bai");
+    }
 }

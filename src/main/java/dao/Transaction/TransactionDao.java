@@ -1,5 +1,6 @@
-package dao;
+package dao.Transaction;
 
+import dao.JDBCConnection;
 import model.Transaction;
 
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TransactionDao implements IDAO<Transaction> {
+public class TransactionDao implements ITransactionDao {
 
     private  static final String INSERT_TRANSACTION_SQL = "INSERT INTO transaction" +
             " (id, status, user_id, user_name,\n" +
@@ -54,6 +55,7 @@ public class TransactionDao implements IDAO<Transaction> {
         }
         return transactions;
     }
+
 
     @Override
     public void insert(Transaction transaction) {
@@ -109,6 +111,12 @@ public class TransactionDao implements IDAO<Transaction> {
         }
         return rowDeleted;
     }
+
+    @Override
+    public Transaction selectById(int id) {
+        return null;
+    }
+
 
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {

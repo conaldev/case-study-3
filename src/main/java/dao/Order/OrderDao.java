@@ -1,5 +1,6 @@
-package dao;
+package dao.Order;
 
+import dao.JDBCConnection;
 import model.Order;
 
 
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDao implements IDAO<Order> {
+public class OrderDao implements IOrderDao {
     
     private  static final String INSERT_ORDER_SQL = "INSERT INTO orders" +
             " (transaction_id, id, product_id, qty, amount, status) VALUES" +"(?,?,?,?,?,?);";
@@ -85,5 +86,10 @@ public class OrderDao implements IDAO<Order> {
             rowDeleted = statement.executeUpdate() > 0;
         }
         return rowDeleted;
+    }
+
+    @Override
+    public Order selectById(int id) {
+        return null;
     }
 }

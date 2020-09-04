@@ -50,7 +50,7 @@ public class User {
     }
 
     public java.sql.Date getCreated() {
-        return created;
+        return (java.sql.Date) created;
     }
 
     public void setCreated(Date created) {

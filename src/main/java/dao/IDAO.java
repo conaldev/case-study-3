@@ -7,6 +7,7 @@ public interface IDAO<T> {
     //CRUD
     List<T> selectAll();
     void insert(T t);
+    T selectById(int id);
     boolean update(T t) throws SQLException;
     boolean delete(int id) throws SQLException;
 }

@@ -25,7 +25,7 @@
             <th>Description</th>
             <th>Price</th>
         </tr>
-        <c:out value="" item=""></c:out>
+        <c:forEach value="" items="{$}"></c:forEach>
         <tr>
             <td></td>
         </tr>

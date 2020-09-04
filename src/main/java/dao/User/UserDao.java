@@ -1,6 +1,6 @@
-package dao;
+package dao.User;
 
-import model.Product;
+import dao.JDBCConnection;
 import model.User;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class UserDao implements IDAO<User> {
+public class UserDao implements IUserDao {
 
     private  static final String INSERT_USER = "INSERT INTO user" +
             " (id, name, email, address, created) VALUES" +"(?,?,?,?,?);";
@@ -84,6 +84,11 @@ public class UserDao implements IDAO<User> {
             rowDeleted = statement.executeUpdate() > 0;
         }
         return rowDeleted;
+    }
+
+    @Override
+    public User selectById(int id) {
+        return null;
     }
 
     private void printSQLException(SQLException ex) {

@@ -1,20 +1,22 @@
 package controller;
 
-import dao.IDAO;
-import dao.ProductDao;
-import model.List;
+import dao.Product.IProductDao;
+import dao.Product.ProductDao;
 import model.Product;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet(name = "productServlet", urlPatterns = "/product")
 public class productServlet extends HttpServlet {
-    private IDAO productDao = new ProductDao();
+    private IProductDao productDao = new ProductDao();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null){
@@ -25,7 +27,11 @@ public class productServlet extends HttpServlet {
                 insertProduct(request,response);
                 break;
             case "update":
-                updateProduct(request,response);
+                try {
+                    updateProduct(request,response);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 break;
         }
     }
@@ -47,7 +53,11 @@ public class productServlet extends HttpServlet {
                 showUpdateProduct(request,response);
                 break;
             case "delete":
-                deleteProduct(request,response);
+                try {
+                    deleteProduct(request,response);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 break;
             default:
                 listProduct(request,response);
@@ -55,23 +65,56 @@ public class productServlet extends HttpServlet {
         }
     }
 
-    private void listProduct(HttpServletRequest request, HttpServletResponse response) {
-        List<Product> productList = productDao.
+    private void listProduct(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<Product> productList = productDao.selectAll();
+        request.setAttribute("productList",productList);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("product/view.jsp");
+        dispatcher.forward(request, response);
     }
 
-    private void insertProduct(HttpServletRequest request, HttpServletResponse response) {
-
+    private void insertProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        long price = Long.parseLong(request.getParameter("price"));
+        Product product = new Product(id, name, description, price);
+        productDao.insert(product);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("product/create.jsp");
+        dispatcher.forward(request,response);
     }
 
-    private void updateProduct(HttpServletRequest request, HttpServletResponse response) {
+    private void updateProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        long price = Long.parseLong(request.getParameter("price"));
+        Product product = new Product(id, name, description, price);
+        productDao.update(product);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("product/update.jsp");
+        dispatcher.forward(request,response);
     }
 
-    private void showNewProduct(HttpServletRequest request, HttpServletResponse response) {
+    private void showNewProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("product/create.jsp");
+        dispatcher.forward(request,response);
     }
 
     private void showUpdateProduct(HttpServletRequest request, HttpServletResponse response) {
+        int id  = Integer.parseInt(request.getParameter("id"));
+        Product product =  productDao.selectById(id);
+        request.setAttribute("showUpdate",product);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("product/update.jsp");
+        request.setAttribute("update", product);
     }
 
-    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) {
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        productDao.delete(id);
+
+        List<Product> productList = productDao.selectAll();
+        request.setAttribute("productList",productList);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("product/view.jsp");
+        dispatcher.forward(request, response);
     }
 }
