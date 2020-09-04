@@ -6,9 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class AdminDao implements IDAO<Admin> {
-    private final String jdbcURL= "jdbc:mysql://localhost:3306/demo?useSSl=false";
-    private final String jdbcUserName="root";
-    private final String jdbcPassword="123456";
 
     private static final String SELECT_ALL_ADMIN = "select * from admin";
     private static final String DELETE_ADMIN_BY_ID = "delete from admin where = ?;";

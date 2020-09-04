@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDao implements IDAO<Product> {
-    private final String jdbcURL = "jdbc:mysql://localhost:3306/demoCaseStudy?useSSl=false";
-    private final String jdbcUsername = "root";
-    private final String jdbcPassword = "123456";
-
+    
     private static final String INSERT_USERS_SQL = "INSERT INTO product" +
             " (id, name,description, price) VALUES" +"(?,?,?,?);";
     //    private static final String SELECT_USER_BY_ID = "select id,name,email,country from users where id =?";
@@ -20,23 +17,12 @@ public class ProductDao implements IDAO<Product> {
             " (id, name, description, price) VALUES" +"(?,?,?,?);";
 //    private static final String FIND_USER_BY_COUNTRY = "select * from product where country = ?;";
 //    private static final String SORT_BY_NAME = "select * from product order by name;";
-
-    protected Connection getConnection(){
-        Connection connection = null;
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(jdbcURL,jdbcUsername,jdbcPassword);
-        } catch (SQLException | ClassNotFoundException ex){
-            ex.printStackTrace();
-        }
-        return connection;
-    }
-
+    
     @Override
     public List<Product> selectAll() {
         List<Product> products = new ArrayList<>();
         try(
-                Connection connection = getConnection();
+                Connection connection = JDBCConnection.getJDBCConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
@@ -55,7 +41,7 @@ public class ProductDao implements IDAO<Product> {
 
     @Override
     public void insert(Product product) {
-        try (Connection connection = getConnection();
+        try (Connection connection = JDBCConnection.getJDBCConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);){
             preparedStatement.setInt(1,product.getId());
             preparedStatement.setString(2,product.getName());
@@ -71,7 +57,7 @@ public class ProductDao implements IDAO<Product> {
     @Override
     public boolean update(Product product) throws SQLException {
         boolean rowUpdate;
-        try(Connection connection = getConnection();
+        try(Connection connection = JDBCConnection.getJDBCConnection();
             PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
             statement.setInt(1,product.getId());
             statement.setString(2,product.getName());
@@ -85,7 +71,7 @@ public class ProductDao implements IDAO<Product> {
     @Override
     public boolean delete(int id) throws SQLException {
         boolean rowDeleted;
-        try (Connection connection = getConnection();
+        try (Connection connection = JDBCConnection.getJDBCConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL);){
             statement.setInt(1,id);
             rowDeleted = statement.executeUpdate() > 0;
