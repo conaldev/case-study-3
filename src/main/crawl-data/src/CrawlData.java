@@ -27,23 +27,22 @@ public class CrawlData {
                 content = content.replaceAll("</a>","");
                 content = content.replaceAll("<li class=\"(.*?)\">","");
                 content = content.replaceAll("</li>","");
+                content = content.replaceAll("\\.","");
+                content = content.replaceAll(",","");
                 Pattern p = Pattern.compile("<meta itemprop=\"image\" content=\"(.*?)\" />(.*?)<div class=\"area_price \" id=\"normalproduct\"> <strong>(.*?)₫</strong(.*?)class=\"table\"> <span>CPU:</span><div>(.*?)</div><span>RAM:</span><div>(.*?)</div><span>Ổ cứng:</span><div>(.*?)</div><span>Màn hình:</span><div>(.*?)</div(.*?)PAGE_TYPE = '(.*?)'");
                 Matcher m = p.matcher(content);
-
+                String text = "INSERT INTO product (productName, price, description, imgURL)";
                 while (m.find()) {
-                    String imgURL = m.group(1);
+                    String imgURL = "'"+ m.group(1)+"'";
                     long price =Long.parseLong(m.group(3));
-                    String description = "CPU: " +m.group(5)+ "\n" + "RAM: " +m.group(6) + "\n" +
+                    String description = "'"+"CPU: " +m.group(5)+ "\n" + "RAM: " +m.group(6) + "\n" +
                             "Ổ CỨNG: " + m.group(7) + "\n" +
-                            "Màn Hình: " +m.group(8);
-                    String productName = m.group(10);
-                    Product inProduct = new Product(productName,"Apple", description,price);
-                    List.productArrayList.add(inProduct);
+                            "Màn Hình: " +m.group(8) +"'";
+                    String productName = "'"+m.group(10)+"'";
+                    String textV = "VALUES ("+productName+",'" +price+"',"+ description+","+imgURL+" ),";
+                    System.out.println(textV);
                 }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
