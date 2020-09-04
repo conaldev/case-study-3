@@ -4,17 +4,26 @@ import java.util.Date;
 
 public class Product {
     private int id;
-    private String name;
-//    private String vendor;
-    private String description;
+    private String productName;
     private long price;
+    private String description;
+    private String imgUrl;
+    private String Vendor;
 
-    public Product(int id, String name, String description, long price) {
+    public Product(int id, String productName, long price, String description, String imgUrl, String Vendor) {
         this.id = id;
-        this.name = name;
-        this.description = description;
+        this.productName = productName;
         this.price = price;
+        this.description = description;
+        this.imgUrl = imgUrl;
+        this.Vendor = Vendor;
     }
+    //    public Product(int id, String name, String description, long price) {
+//        this.id = id;
+//        this.name = name;
+//        this.description = description;
+//        this.price = price;
+//    }
 
 
     public int getId() {
@@ -25,22 +34,21 @@ public class Product {
         this.id = id;
     }
 
-    public String getName(){
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-//    public String getVendor() {
-//        return vendor;
-//    }
-//
-//    public void setVendor(String vendor) {
-//        this.vendor = vendor;
-//    }
+    public String getVendor() {
+        return Vendor;
+    }
 
+    public void setVendor(String vendor) {
+        this.Vendor = vendor;
+    }
 
 
     public String getDescription() {
@@ -57,5 +65,13 @@ public class Product {
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

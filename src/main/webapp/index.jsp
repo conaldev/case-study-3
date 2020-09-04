@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <%--
 =======
 <%@ page import="model.List" %><%--
@@ -9,23 +9,14 @@
   Time: 20:40
   To change this template use File | Settings | File Templates.
 --%>
-<<<<<<< HEAD
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Trang Chủ</title>
-</head>
-<body>
 
-=======
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Trang Chu</title>
 </head>
 <body>
-    <% List.productArrayList.get(3) %>
->>>>>>> 337e8f699f2ec9bf803741269a52631ebeb78d00
+<h1>Trang Chu</h1>
 </body>
 </html>

@@ -10,25 +10,38 @@
 <html>
 <head>
     <title>Productstitle>
-</head>
+</title>
 <body>
 <center>
     <h1>Quản Lý Sản Phẩm</h1>
 </center>
 <div align="center">
-    <table border="1" cellpadding="5">
+    <table border="1" cellpadding="6">
         <caption><h2>Danh sách sản phẩm</h2></caption>
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Vendor</th>
-            <th>Description</th>
             <th>Price</th>
+            <th>Description</th>
+            <th>ImgURL</th>
+            <th>Action</th>
+
         </tr>
-        <c:forEach value="" items="{$}"></c:forEach>
-        <tr>
-            <td></td>
-        </tr>
+        <c:forEach var="productList" items="${productList}">
+            <tr>
+                <td><c:out value="${productList.id}"/></td>
+                <td><c:out value="${productList.productName}"/></td>
+                <td><c:out value="${productList.price}"/></td>
+                <td><c:out value="${productList.description}"/></td>
+                <td><c:out value="${productList.imgUrl}"/></td>
+                <td>
+                    <a href="/productList?action=edit&id=${productList.id}">Edit</a>
+                    <a href="/productList?action=delete&id=${productList.id}">Delete</a>
+                </td>
+<%--                <td><input type="button" ></td>--%>
+            </tr>
+        </c:forEach>
+
     </table>
 </div>
 </body>

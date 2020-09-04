@@ -9,12 +9,12 @@ import java.util.List;
 
 public class ProductDao implements IProductDao {
     private static final String INSERT_PRODUCT_SQL = "INSERT INTO product" +
-            " (id, name,description, price) VALUES" +"(?,?,?,?);";
+            " (id,productName,price, description, imgUrl, Vendor) VALUES" +"(?,?,?,?,?,?);";
     private static final String SELECT_PRODUCT_BY_ID = "select * from product where id =?";
     private static final String SELECT_ALL_PRODUCT = "select * from product;";
     private static final String DELETE_PRODUCT_SQL = "delete from product where id = ?;";
     private static final String UPDATE_PRODUCT_SQL = "update product set " +
-            " (id, name, description, price) VALUES" +"(?,?,?,?);";
+            " (id,productName,price, description, imgUrl, Vendor) VALUES" +"(?,?,?,?,?,?);";
 //    private static final String FIND_USER_BY_COUNTRY = "select * from product where country = ?;";
 //    private static final String SORT_BY_NAME = "select * from product order by name;";
     
@@ -27,11 +27,14 @@ public class ProductDao implements IProductDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String description = rs.getString("description");
+                String productName = rs.getString("productName");
                 long price = rs.getLong("price");
+                String description = rs.getString("description");
+                String imgUrl = rs.getString("imgUrl");
+                String Vendor = rs.getString("Vendor");
 
-                products.add(new Product(id,name,description, price));
+
+                products.add(new Product(id,productName,price, description, imgUrl, Vendor ));
             }
         }catch (SQLException e){
             printSQLException(e);
@@ -44,10 +47,11 @@ public class ProductDao implements IProductDao {
         try (Connection connection = JDBCConnection.getJDBCConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PRODUCT_SQL);){
             preparedStatement.setInt(1,product.getId());
-            preparedStatement.setString(2,product.getName());
-            preparedStatement.setString(3,product.getDescription());
-            preparedStatement.setLong(4,product.getPrice());
-
+            preparedStatement.setString(2,product.getProductName());
+            preparedStatement.setLong(3,product.getPrice());
+            preparedStatement.setString(4,product.getDescription());
+            preparedStatement.setString(5, product.getImgUrl());
+            preparedStatement.setString(6,product.getVendor());
             preparedStatement.executeUpdate();
         }catch (SQLException e){
             printSQLException(e);
@@ -60,9 +64,11 @@ public class ProductDao implements IProductDao {
         try(Connection connection = JDBCConnection.getJDBCConnection();
             PreparedStatement statement = connection.prepareStatement(UPDATE_PRODUCT_SQL);) {
             statement.setInt(1,product.getId());
-            statement.setString(2,product.getName());
-            statement.setString(3,product.getDescription());
-            statement.setLong(4,product.getPrice());
+            statement.setString(2,product.getProductName());
+            statement.setLong(3,product.getPrice());
+            statement.setString(4,product.getDescription());
+            statement.setString(5, product.getImgUrl());
+            statement.setString(6,product.getVendor());
             rowUpdate = statement.executeUpdate() > 0;
         }
         return rowUpdate;
@@ -87,10 +93,12 @@ public class ProductDao implements IProductDao {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
-                String name = rs.getString("name");
-                String description = rs.getString("description");
+                String productName = rs.getString("productName");
                 long price = rs.getLong("price");
-                products = new Product(id,name,description,price);
+                String description = rs.getString("description");
+                String imgUrl = rs.getString("imgUrl");
+                String Vendor = rs.getString("Vendor");
+                products = new Product(id,productName,price,description,imgUrl,Vendor );
             }
         } catch (SQLException ex){
             printSQLException(ex);

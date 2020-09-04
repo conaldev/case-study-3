@@ -69,34 +69,40 @@ public class productServlet extends HttpServlet {
             throws ServletException, IOException {
         List<Product> productList = productDao.selectAll();
         request.setAttribute("productList",productList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/view.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/product/view.jsp");
         dispatcher.forward(request, response);
     }
 
     private void insertProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
+        String productName = request.getParameter("productName");
         long price = Long.parseLong(request.getParameter("price"));
-        Product product = new Product(id, name, description, price);
+        String description = request.getParameter("description");
+        String imgUrl = request.getParameter("imgURl");
+        String Vendor = request.getParameter("Vendor");
+        Product product = new Product(id, productName, price, description,imgUrl,Vendor);
         productDao.insert(product);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/product/create.jsp");
         dispatcher.forward(request,response);
     }
 
     private void updateProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
+        String productName = request.getParameter("productName");
         long price = Long.parseLong(request.getParameter("price"));
-        Product product = new Product(id, name, description, price);
+        String description = request.getParameter("description");
+        String imgUrl = request.getParameter("imgURl");
+        String Vendor = request.getParameter("Vendor");
+
+
+        Product product = new Product(id, productName, price, description,imgUrl, Vendor);
         productDao.update(product);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/update.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/product/update.jsp");
         dispatcher.forward(request,response);
     }
 
     private void showNewProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/product/create.jsp");
         dispatcher.forward(request,response);
     }
 
@@ -104,7 +110,7 @@ public class productServlet extends HttpServlet {
         int id  = Integer.parseInt(request.getParameter("id"));
         Product product =  productDao.selectById(id);
         request.setAttribute("showUpdate",product);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/update.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/product/update.jsp");
         request.setAttribute("update", product);
     }
 
@@ -114,7 +120,7 @@ public class productServlet extends HttpServlet {
 
         List<Product> productList = productDao.selectAll();
         request.setAttribute("productList",productList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/view.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/product/view.jsp");
         dispatcher.forward(request, response);
     }
 }
