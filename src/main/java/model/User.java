@@ -49,7 +49,7 @@ public class User {
         this.address = address;
     }
 
-    public Date getCreated() {
+    public java.sql.Date getCreated() {
         return created;
     }
 

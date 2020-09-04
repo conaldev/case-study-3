@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDao implements IDAO<Product> {
-    
     private static final String INSERT_USERS_SQL = "INSERT INTO product" +
             " (id, name,description, price) VALUES" +"(?,?,?,?);";
     //    private static final String SELECT_USER_BY_ID = "select id,name,email,country from users where id =?";

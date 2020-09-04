@@ -1,9 +1,10 @@
 package model;
 
+import java.util.Date;
+
 public class Product {
     private int id;
     private String name;
-<<<<<<< HEAD
 //    private String vendor;
     private String description;
     private long price;
@@ -11,20 +12,10 @@ public class Product {
     public Product(int id, String name, String description, long price) {
         this.id = id;
         this.name = name;
-//        this.vendor = vendor;
-=======
-    private String vendor;
-    private String description;
-    private long price;
-
-    public Product(String name, String vendor, String description, long price) {
-        this.id = id;
-        this.name = name;
-        this.vendor = vendor;
->>>>>>> 337e8f699f2ec9bf803741269a52631ebeb78d00
         this.description = description;
         this.price = price;
     }
+
 
     public int getId() {
         return id;
@@ -34,7 +25,7 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
+    public String getName(){
         return name;
     }
 
@@ -42,7 +33,6 @@ public class Product {
         this.name = name;
     }
 
-<<<<<<< HEAD
 //    public String getVendor() {
 //        return vendor;
 //    }
@@ -50,15 +40,8 @@ public class Product {
 //    public void setVendor(String vendor) {
 //        this.vendor = vendor;
 //    }
-=======
-    public String getVendor() {
-        return vendor;
-    }
 
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
-    }
->>>>>>> 337e8f699f2ec9bf803741269a52631ebeb78d00
+
 
     public String getDescription() {
         return description;
@@ -67,7 +50,6 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
-<<<<<<< HEAD
 
     public long getPrice() {
         return price;
@@ -76,6 +58,4 @@ public class Product {
     public void setPrice(long price) {
         this.price = price;
     }
-=======
->>>>>>> 337e8f699f2ec9bf803741269a52631ebeb78d00
 }
