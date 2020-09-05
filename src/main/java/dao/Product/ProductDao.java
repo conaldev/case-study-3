@@ -9,12 +9,11 @@ import java.util.List;
 
 public class ProductDao implements IProductDao {
     private static final String INSERT_PRODUCT_SQL = "INSERT INTO product" +
-            " (id,productName,price, description, imgUrl, Vendor) VALUES" +"(?,?,?,?,?,?);";
-    private static final String SELECT_PRODUCT_BY_ID = "select * from product where id =?";
-    private static final String SELECT_ALL_PRODUCT = "select * from product;";
+            " (productName,price, description, imgUrl) VALUES" +"(?,?,?,?);";
+    private static final String SELECT_PRODUCT_BY_ID = "select id,productName,price,description,imgURL from product where id =?";
+    private static final String SELECT_ALL_PRODUCT = "select * from product;";  
     private static final String DELETE_PRODUCT_SQL = "delete from product where id = ?;";
-    private static final String UPDATE_PRODUCT_SQL = "update product set " +
-            " (id,productName,price, description, imgUrl, Vendor) VALUES" +"(?,?,?,?,?,?);";
+    private static final String UPDATE_PRODUCT_SQL = "update product set productName = ? ,price = ?, description = ?, imgUrl =? WHERE id = ?;";
 //    private static final String FIND_USER_BY_COUNTRY = "select * from product where country = ?;";
 //    private static final String SORT_BY_NAME = "select * from product order by name;";
     
@@ -28,13 +27,13 @@ public class ProductDao implements IProductDao {
             while (rs.next()){
                 int id = rs.getInt("id");
                 String productName = rs.getString("productName");
-                long price = rs.getLong("price");
+                String price = rs.getString("price");
                 String description = rs.getString("description");
                 String imgUrl = rs.getString("imgUrl");
-                String Vendor = rs.getString("Vendor");
+//                String Vendor = rs.getString("Vendor");
 
 
-                products.add(new Product(id,productName,price, description, imgUrl, Vendor ));
+                products.add(new Product(id,productName,price, description, imgUrl));
             }
         }catch (SQLException e){
             printSQLException(e);
@@ -44,14 +43,14 @@ public class ProductDao implements IProductDao {
 
     @Override
     public void insert(Product product) {
+        System.out.println(INSERT_PRODUCT_SQL);
         try (Connection connection = JDBCConnection.getJDBCConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PRODUCT_SQL);){
-            preparedStatement.setInt(1,product.getId());
-            preparedStatement.setString(2,product.getProductName());
-            preparedStatement.setLong(3,product.getPrice());
-            preparedStatement.setString(4,product.getDescription());
-            preparedStatement.setString(5, product.getImgUrl());
-            preparedStatement.setString(6,product.getVendor());
+            preparedStatement.setString(1,product.getProductName());
+            preparedStatement.setString(2,product.getPrice());
+            preparedStatement.setString(3,product.getDescription());
+            preparedStatement.setString(4, product.getImgUrl());
+//            preparedStatement.setString(6,product.getVendor());
             preparedStatement.executeUpdate();
         }catch (SQLException e){
             printSQLException(e);
@@ -63,12 +62,12 @@ public class ProductDao implements IProductDao {
         boolean rowUpdate;
         try(Connection connection = JDBCConnection.getJDBCConnection();
             PreparedStatement statement = connection.prepareStatement(UPDATE_PRODUCT_SQL);) {
-            statement.setInt(1,product.getId());
-            statement.setString(2,product.getProductName());
-            statement.setLong(3,product.getPrice());
-            statement.setString(4,product.getDescription());
-            statement.setString(5, product.getImgUrl());
-            statement.setString(6,product.getVendor());
+            statement.setString(1,product.getProductName());
+            statement.setString(2,product.getPrice());
+            statement.setString(3,product.getDescription());
+            statement.setString(4, product.getImgUrl());
+            statement.setInt(5,product.getId());
+//            statement.setString(6,product.getVendor());
             rowUpdate = statement.executeUpdate() > 0;
         }
         return rowUpdate;
@@ -94,11 +93,11 @@ public class ProductDao implements IProductDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
                 String productName = rs.getString("productName");
-                long price = rs.getLong("price");
+                String price = rs.getString("price");
                 String description = rs.getString("description");
                 String imgUrl = rs.getString("imgUrl");
-                String Vendor = rs.getString("Vendor");
-                products = new Product(id,productName,price,description,imgUrl,Vendor );
+//                String Vendor = rs.getString("Vendor");
+                products = new Product(id,productName,price,description,imgUrl);
             }
         } catch (SQLException ex){
             printSQLException(ex);

@@ -14,7 +14,9 @@
 <body>
 <center>
     <h1>Quản Lý Sản Phẩm</h1>
+    <h2><a  href="product?action=create">Thêm Sản Phẩm</a></h2>
 </center>
+
 <div align="center">
     <table border="1" cellpadding="6">
         <caption><h2>Danh sách sản phẩm</h2></caption>
@@ -25,7 +27,6 @@
             <th>Description</th>
             <th>ImgURL</th>
             <th>Action</th>
-
         </tr>
         <c:forEach var="productList" items="${productList}">
             <tr>
@@ -35,8 +36,8 @@
                 <td><c:out value="${productList.description}"/></td>
                 <td><c:out value="${productList.imgUrl}"/></td>
                 <td>
-                    <a href="/productList?action=edit&id=${productList.id}">Edit</a>
-                    <a href="/productList?action=delete&id=${productList.id}">Delete</a>
+                    <a href="/product?action=update&id=${productList.id}">Edit</a>
+                    <a href="/product?action=delete&id=${productList.id}">Delete</a>
                 </td>
 <%--                <td><input type="button" ></td>--%>
             </tr>

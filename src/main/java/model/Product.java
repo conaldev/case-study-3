@@ -5,20 +5,28 @@ import java.util.Date;
 public class Product {
     private int id;
     private String productName;
-    private long price;
+    private String price;
     private String description;
     private String imgUrl;
-    private String Vendor;
+//    private String Vendor;
 
-    public Product(int id, String productName, long price, String description, String imgUrl, String Vendor) {
+
+    public Product(String productName, String price, String description, String imgUrl) {
+        this.productName = productName;
+        this.price = price;
+        this.description = description;
+        this.imgUrl = imgUrl;
+    }
+
+    public Product(int id, String productName, String price, String description, String imgUrl) {
         this.id = id;
         this.productName = productName;
         this.price = price;
         this.description = description;
         this.imgUrl = imgUrl;
-        this.Vendor = Vendor;
+//        this.Vendor = Vendor;
     }
-    //    public Product(int id, String name, String description, long price) {
+    //    public Product(int id, String name, String description, String price) {
 //        this.id = id;
 //        this.name = name;
 //        this.description = description;
@@ -42,13 +50,13 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getVendor() {
-        return Vendor;
-    }
-
-    public void setVendor(String vendor) {
-        this.Vendor = vendor;
-    }
+//    public String getVendor() {
+//        return Vendor;
+//    }
+//
+//    public void setVendor(String vendor) {
+//        this.Vendor = vendor;
+//    }
 
 
     public String getDescription() {
@@ -59,11 +67,11 @@ public class Product {
         this.description = description;
     }
 
-    public long getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
