@@ -3,6 +3,7 @@ package controller;
 import dao.Product.IProductDao;
 import dao.Product.ProductDao;
 import model.Product;
+import model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,15 +31,24 @@ public class productServlet extends HttpServlet {
                 case "update":
                     updateProduct(request, response);
                     break;
+                case "search":
+                    findProductById(request, response);
+                    break;
+                case "sortASC":
+                    sortProductASC(request, response);
+                    break;
+                case "sortDESC":
+                    sortProductDESC(request, response);
+                    break;
+
+
+
             }
         } catch (SQLException ex){
             throw new ServletException();
         }
 
     }
-
-
-
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -123,4 +133,34 @@ public class productServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/product/view.jsp");
         dispatcher.forward(request, response);
     }
+
+    private void findProductById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        List<Product> productList = productDao.findID(id);
+        request.setAttribute("productList", productList);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/product/view.jsp");
+        dispatcher.forward(request,response);
+
+    }
+
+
+    private void sortProductASC(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Product> productList = productDao.sortPriceASC();
+        request.setAttribute("productList",productList);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/product/view.jsp");
+        dispatcher.forward(request,response);
+    }
+
+
+    private void sortProductDESC(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Product> productList = productDao.sortPriceDESC();
+        request.setAttribute("productList",productList);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/product/view.jsp");
+        dispatcher.forward(request,response);
+    }
+
+
+
+
+
 }

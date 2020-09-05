@@ -2,6 +2,7 @@ package dao.Product;
 
 import dao.JDBCConnection;
 import model.Product;
+import model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ public class ProductDao implements IProductDao {
     private static final String SELECT_ALL_PRODUCT = "select * from product;";  
     private static final String DELETE_PRODUCT_SQL = "delete from product where id = ?;";
     private static final String UPDATE_PRODUCT_SQL = "update product set productName = ? ,price = ?, description = ?, imgUrl =? WHERE id = ?;";
-//    private static final String FIND_USER_BY_COUNTRY = "select * from product where country = ?;";
-//    private static final String SORT_BY_NAME = "select * from product order by name;";
-    
+    private static final String FIND_PRODUCT_BY_ID = "select * from product where id = ?;";
+    private static final String SORT_PRICE_ASC = "select * from product order by price ASC;";
+    private static final String SORT_PRICE_DESC = "select * from product order by price DESC;";
     @Override
     public List<Product> selectAll() {
         List<Product> products = new ArrayList<>();
@@ -31,8 +32,6 @@ public class ProductDao implements IProductDao {
                 String description = rs.getString("description");
                 String imgUrl = rs.getString("imgUrl");
 //                String Vendor = rs.getString("Vendor");
-
-
                 products.add(new Product(id,productName,price, description, imgUrl));
             }
         }catch (SQLException e){
@@ -119,5 +118,65 @@ public class ProductDao implements IProductDao {
                 }
             }
         }
+    }
+
+    @Override
+    public List<Product> findID(int id) {
+        List<Product> products = new ArrayList<>();
+        try(Connection connection = JDBCConnection.getJDBCConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_PRODUCT_BY_ID);){
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                String productName = rs.getString("productName");
+                String price = rs.getString("price");
+                String description = rs.getString("description");
+                String imgUrl = rs.getString("imgUrl");
+                products.add(new Product(id,productName,price,description,imgUrl));
+            }
+        } catch (SQLException ex){
+            printSQLException(ex);
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> sortPriceASC() {
+        List<Product> products  = new ArrayList<>();
+        try ( Connection connection = JDBCConnection.getJDBCConnection();
+              PreparedStatement preparedStatement = connection.prepareStatement(SORT_PRICE_ASC);){
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String productName = rs.getString("productName");
+                String price = rs.getString("price");
+                String description = rs.getString("description");
+                String imgUrl = rs.getString("imgUrl");
+                products.add(new Product(id, productName, price, description,imgUrl));
+            }
+        }catch (SQLException e){
+            printSQLException(e);
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> sortPriceDESC() {
+        List<Product> products  = new ArrayList<>();
+        try ( Connection connection = JDBCConnection.getJDBCConnection();
+              PreparedStatement preparedStatement = connection.prepareStatement(SORT_PRICE_DESC);){
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String productName = rs.getString("productName");
+                String price = rs.getString("price");
+                String description = rs.getString("description");
+                String imgUrl = rs.getString("imgUrl");
+                products.add(new Product(id, productName, price, description,imgUrl));
+            }
+        }catch (SQLException e){
+            printSQLException(e);
+        }
+        return products;
     }
 }
