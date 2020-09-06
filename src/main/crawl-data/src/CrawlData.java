@@ -31,7 +31,8 @@ public class CrawlData {
                 content = content.replaceAll(",","");
                 Pattern p = Pattern.compile("<meta itemprop=\"image\" content=\"(.*?)\" />(.*?)<div class=\"area_price \" id=\"normalproduct\"> <strong>(.*?)₫</strong(.*?)class=\"table\"> <span>CPU:</span><div>(.*?)</div><span>RAM:</span><div>(.*?)</div><span>Ổ cứng:</span><div>(.*?)</div><span>Màn hình:</span><div>(.*?)</div(.*?)PAGE_TYPE = '(.*?)'");
                 Matcher m = p.matcher(content);
-                String text = "INSERT INTO product (productName, price, description, imgURL)";
+                String text = "INSERT INTO product (productName, price, description, imgURL) \n values ";
+                System.out.println(text);
                 while (m.find()) {
                     String imgURL = "'"+ m.group(1)+"'";
                     long price =Long.parseLong(m.group(3));
@@ -39,7 +40,7 @@ public class CrawlData {
                             "Ổ CỨNG: " + m.group(7) + "\n" +
                             "Màn Hình: " +m.group(8) +"'";
                     String productName = "'"+m.group(10)+"'";
-                    String textV = "VALUES ("+productName+",'" +price+"',"+ description+","+imgURL+" ),";
+                    String textV = "("+productName+",'" +price+"',"+ description+","+imgURL+" ),";
                     System.out.println(textV);
                 }
 

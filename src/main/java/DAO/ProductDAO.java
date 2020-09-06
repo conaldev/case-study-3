@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ProductDAO implements IProductDAO{
     private  String jdbcURL = "jdbc:mysql://localhost:3306/webLaptop?useSSL=false";
-    private   String jdbcUser = "rootcs";
+    private  String jdbcUser = "rootcs";
     private  String jdbcPassword = "12345678";
 
     private static final String INSERT_PRODUCT_SQL ="INSERT INTO Product" +
