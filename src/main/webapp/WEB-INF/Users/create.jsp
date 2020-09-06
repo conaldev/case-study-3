@@ -9,12 +9,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>Thêm Sản Phẩm</title>
+    <title>Chỉnh Sửa Thông Tin Tài Khoản</title>
 
 </head>
 <body>
 <center>
-    <h2>Thêm Sản Phẩm</h2>
+    <h2>Thông tin tài khoản</h2>
 </center>
 <div align="center">
     <form method="post">
@@ -26,27 +26,33 @@
 <%--               </td>--%>
 <%--           </tr>--%>
             <tr>
-                <th>Tên Sản Phẩm</th>
+                <th>Họ Tên </th>
                 <td>
-                    <input type="text" name="productName" id="name" size="45"/>
+                    <input type="text" name=userFullName id="name" size="45"/>
                 </td>
             </tr>
             <tr>
-                <th>Giá Sản Phẩm</th>
+                <th>Số điện thoại</th>
                 <td>
-                    <input type="text" name="price" id="price" size="45"/>
+                    <input type="text" name="userPhoneNumber" id="phone" size="45"/>
                 </td>
             </tr>
             <tr>
-                <th>Mô Tả</th>
+                <th>Địa chỉ</th>
                 <td>
-                    <input type="text" name="description" id="desc" size="45"/>
+                    <input type="text" name="userAddress" id="address" size="45"/>
                 </td>
             </tr>
             <tr>
-                <th>Link Hình Ảnh</th>
+                <th>Email</th>
                 <td>
-                    <input type="text" name="imgUrl" id="img" size="45"/>
+                    <input type="text" name="userEmail" id="email" size="45"/>
+                </td>
+            </tr>
+            <tr>
+                <th>Role code</th>
+                <td>
+                    <input type="text" name="roleCode" id="roleCole" size="45"/>
                 </td>
             </tr>
             <tr>
@@ -57,6 +63,6 @@
         </table>
     </form>
 </div>
-<h2><a href="product?action=product">Danh sách sản phẩm</a></h2>
+<h2><a href="users?action=users"> Quay Lại Danh Sách Tài Khoản</a></h2>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package caseStudy.model;
+package caseStudy;
 
 public class SignUp {
 }

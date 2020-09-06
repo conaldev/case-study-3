@@ -13,41 +13,48 @@
 </head>
 <body>
 <center>
-    <h2>Cập nhật Thông Tin Sản Phẩm</h2>
+    <h2>Cập nhật Thông Tin </h2>
 </center>
 <div align = "center">
     <form method="post">
         <table border="1" cellpadding="5">
             <c:if test="${showUpdate != null}">
                 <input type="hidden" name="id"
-                       value="<c:out value='${showUpdate.id}'/>"/>
+                       value="<c:out value='${showUpdate.userNumber}'/>"/>
             </c:if>
             <tr>
-                <th>Tên sản phẩm</th>
+                <th>Họ Tên</th>
                 <td>
-                    <input type="text" name="productName" size="45"
-                    value="<c:out value='${showUpdate.productName}'/> "/>
+                    <input type="text" name="userFullName" size="45"
+                    value="<c:out value='${showUpdate.userFullName}'/> "/>
                 </td>
             </tr>
             <tr>
-                <th>Giá sản phẩm</th>
+                <th>Số điện thoại</th>
                 <td>
-                    <input type="text" name="price" size="45"
-                           value="<c:out value='${showUpdate.price}'/> "/>
+                    <input type="text" name="userPhoneNumber" size="45"
+                           value="<c:out value='${showUpdate.userPhoneNumber}'/> "/>
                 </td>
             </tr>
             <tr>
-                <th>Mô Tả</th>
+                <th>Địa chỉ</th>
                 <td>
-                    <input type="text" name="description" size="45"
-                           value="<c:out value='${showUpdate.description}'/> "/>
+                    <input type="text" name="userAddress" size="45"
+                           value="<c:out value='${showUpdate.userAddress}'/> "/>
                 </td>
             </tr>
             <tr>
-                <th>Link Hình Ảnh</th>
+                <th>Email</th>
                 <td>
-                    <input type="text" name="imgUrl" size="45"
-                           value="<c:out value='${showUpdate.imgUrl}'/> "/>
+                    <input type="text" name="userEmail" size="45"
+                           value="<c:out value='${showUpdate.userEmail}'/> "/>
+                </td>
+            </tr>
+            <tr>
+                <th>Role Code</th>
+                <td>
+                    <input type="text" name="roleCode" size="45"
+                           value="<c:out value='${showUpdate.roleCode}'/> "/>
                 </td>
             </tr>
             <tr>
@@ -57,7 +64,7 @@
             </tr>
         </table>
     </form>
-    <h2><a href="product?action=product">Danh Sách Sản Phẩm </a></h2>
+    <h2><a href="users?action=users"> Quay Lại Danh Sách Tài Khoản</a></h2>
 </div>
 
 </body>

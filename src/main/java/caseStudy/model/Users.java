@@ -6,16 +6,23 @@ public class Users {
     private String userPhoneNumber;
     private String userAddress;
     private String userEmail;
-    private String role;
+    private String roleCode;
 
+    public Users(String userFullName, String userPhoneNumber, String userAddress, String userEmail, String roleCode) {
+        this.userFullName = userFullName;
+        this.userPhoneNumber = userPhoneNumber;
+        this.userAddress = userAddress;
+        this.userEmail = userEmail;
+        this.roleCode = roleCode;
+    }
 
-    public Users(int userNumber, String userFullName, String userPhoneNumber, String userAddress, String userEmail, String role) {
+    public Users(int userNumber, String userFullName, String userPhoneNumber, String userAddress, String userEmail, String roleCode) {
         this.userNumber = userNumber;
         this.userFullName = userFullName;
         this.userPhoneNumber = userPhoneNumber;
         this.userAddress = userAddress;
         this.userEmail = userEmail;
-        this.role = role;
+        this.roleCode = roleCode;
     }
 
     public int getUserNumber() {
@@ -58,11 +65,12 @@ public class Users {
         this.userEmail = userEmail;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoleCole() {
+        return roleCode;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
+
 }

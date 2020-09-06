@@ -68,7 +68,7 @@
                 <td><c:out value="${productList.description}"/></td>
                 <td><c:out value="${productList.imgUrl}"/></td>
                 <td>
-                    <a href="/product?action=update&id=${productList.id}">Edit</a>
+                    <a href="/product?action=update&id=${productList.id}">Edit</a> <br/>
                     <a href="/product?action=delete&id=${productList.id}">Delete</a>
                 </td>
 <%--                <td><input type="button" ></td>--%>
