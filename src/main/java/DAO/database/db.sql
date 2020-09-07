@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `Accounts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Accounts` (
-                            `email` varchar(300) NOT NULL,
-                            `password` varchar(50) NOT NULL,
-                            `role` int NOT NULL DEFAULT '0',
-                            PRIMARY KEY (`email`),
-                            UNIQUE KEY `email_UNIQUE` (`email`),
-                            KEY `Accounts_ibfk_1` (`role`),
-                            CONSTRAINT `Accounts_ibfk_1` FOREIGN KEY (`role`) REFERENCES `Users` (`userNumber`)
+  `email` varchar(300) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `role` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`email`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `Accounts_ibfk_1` (`role`),
+  CONSTRAINT `Accounts_ibfk_1` FOREIGN KEY (`role`) REFERENCES `Users` (`userNumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,14 +50,14 @@ DROP TABLE IF EXISTS `Cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Cart` (
-                        `cusNumber` int NOT NULL,
-                        `productID` int NOT NULL,
-                        `quanity` int NOT NULL,
-                        PRIMARY KEY (`cusNumber`),
-                        UNIQUE KEY `cusNumber_UNIQUE` (`cusNumber`),
-                        KEY `productID` (`productID`),
-                        CONSTRAINT `Cart_ibfk_1` FOREIGN KEY (`cusNumber`) REFERENCES `Users` (`userNumber`),
-                        CONSTRAINT `Cart_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `Product` (`id`)
+  `cusNumber` int NOT NULL,
+  `productID` int NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`cusNumber`),
+  UNIQUE KEY `cusNumber_UNIQUE` (`cusNumber`),
+  KEY `productID` (`productID`),
+  CONSTRAINT `Cart_ibfk_1` FOREIGN KEY (`cusNumber`) REFERENCES `Users` (`userNumber`),
+  CONSTRAINT `Cart_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `Product` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -78,16 +78,16 @@ DROP TABLE IF EXISTS `Orderdetail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Orderdetail` (
-                               `productID` int NOT NULL,
-                               `orderNumber` int NOT NULL,
-                               `quanityOrdered` int NOT NULL,
-                               `priceProduct` bigint NOT NULL,
-                               `orderDate` date NOT NULL,
-                               `cusNumber` int NOT NULL,
-                               `status` varchar(45) NOT NULL,
-                               PRIMARY KEY (`orderNumber`),
-                               KEY `productID` (`productID`),
-                               CONSTRAINT `OrderDetail_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `Product` (`id`)
+  `productID` int NOT NULL,
+  `orderNumber` int NOT NULL AUTO_INCREMENT,
+  `quantityOrdered` int NOT NULL,
+  `priceProduct` bigint NOT NULL,
+  `orderDate` date NOT NULL,
+  `cusNumber` int NOT NULL,
+  `status` varchar(45) NOT NULL,
+  PRIMARY KEY (`orderNumber`),
+  KEY `productID` (`productID`),
+  CONSTRAINT `OrderDetail_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `Product` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -108,15 +108,15 @@ DROP TABLE IF EXISTS `Product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Product` (
-                           `id` int NOT NULL AUTO_INCREMENT,
-                           `productName` varchar(255) NOT NULL,
-                           `price` bigint NOT NULL,
-                           `description` text NOT NULL,
-                           `imgURL` varchar(400) NOT NULL,
-                           `Vendor` varchar(45) NOT NULL,
-                           PRIMARY KEY (`id`),
-                           UNIQUE KEY `id_UNIQUE` (`id`),
-                           UNIQUE KEY `productName_UNIQUE` (`productName`)
+  `id` int NOT NULL AUTO_INCREMENT,
+  `productName` varchar(255) NOT NULL,
+  `price` bigint NOT NULL,
+  `description` text NOT NULL,
+  `imgURL` varchar(400) NOT NULL,
+  `Vendor` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `productName_UNIQUE` (`productName`)
 ) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -138,16 +138,16 @@ DROP TABLE IF EXISTS `Users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Users` (
-                         `userNumber` int NOT NULL AUTO_INCREMENT,
-                         `userFullName` varchar(255) NOT NULL,
-                         `userPhoneNumber` varchar(255) NOT NULL,
-                         `userAddress` varchar(400) NOT NULL,
-                         `userEmail` varchar(300) NOT NULL,
-                         PRIMARY KEY (`userNumber`),
-                         UNIQUE KEY `userNumber_UNIQUE` (`userNumber`),
-                         UNIQUE KEY `userEmail_UNIQUE` (`userEmail`),
-                         CONSTRAINT `Users_ibfk_1` FOREIGN KEY (`userEmail`) REFERENCES `Accounts` (`email`),
-                         CONSTRAINT `Users_ibfk_2` FOREIGN KEY (`userEmail`) REFERENCES `Accounts` (`email`)
+  `userNumber` int NOT NULL AUTO_INCREMENT,
+  `userFullName` varchar(255) NOT NULL,
+  `userPhoneNumber` varchar(255) NOT NULL,
+  `userAddress` varchar(400) NOT NULL,
+  `userEmail` varchar(300) NOT NULL,
+  PRIMARY KEY (`userNumber`),
+  UNIQUE KEY `userNumber_UNIQUE` (`userNumber`),
+  UNIQUE KEY `userEmail_UNIQUE` (`userEmail`),
+  CONSTRAINT `Users_ibfk_1` FOREIGN KEY (`userEmail`) REFERENCES `Accounts` (`email`),
+  CONSTRAINT `Users_ibfk_2` FOREIGN KEY (`userEmail`) REFERENCES `Accounts` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -169,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-07 10:38:00
+-- Dump completed on 2020-09-07 12:01:49
