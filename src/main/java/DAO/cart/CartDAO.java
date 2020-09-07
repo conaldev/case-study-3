@@ -34,7 +34,7 @@ public class CartDAO implements ICartDAO{
 
     @Override
     public Integer getQuantity(Product product) throws SQLException {
-        return null;
+        return 123;
     }
 
     @Override
