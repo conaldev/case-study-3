@@ -1,6 +1,7 @@
 package caseStudy.dao.UsersDao;
 
 import caseStudy.dao.JDBCConnection;
+import caseStudy.model.Customer;
 import caseStudy.model.Product;
 import caseStudy.model.Users;
 
@@ -13,14 +14,13 @@ import java.util.List;
 
 public class UsersDao implements IUsersDao {
     private static final String INSERT_USERS_SQL = "INSERT INTO users" +
-            " (userFullName,userPhoneNumber, userAddress, userEmail, roleCode  ) VALUES" +"(?,?,?,?,?);";
+            " (userFullName,userPhoneNumber, userAddress, userEmail) VALUES" +"(?,?,?,?);";
     private static final String SELECT_USERS_BY_ID = "select * from users where userNumber =?";
     private static final String SELECT_ALL_USERS = "select * from users;";
     private static final String DELETE_USERS_SQL = "delete from users where userNumber = ?;";
     private static final String UPDATE_USERS_SQL = "update users set userFullName = ? ,userPhoneNumber = ?, userAddress = ?, userEmail =? WHERE userNumber = ?;";
-    private static final String FIND_USERS = "select * from users where  = ? or userFullName = ? or userPhoneNumber = ? or userEmail = ? ;";
+    private static final String FIND_USERS = "select * from users where userNumber = ? or userFullName = ? or userPhoneNumber = ? or userEmail = ? ;";
     private static final String SORT_USERS_Name = "select * from users order by userFullName;";
-//    private static final String SORT_PRICE_DESC = "select * from users order by price DESC;";
 
     @Override
     public List<Users> selectAll() {
@@ -35,9 +35,7 @@ public class UsersDao implements IUsersDao {
                 String userPhoneNumber = rs.getString("userPhoneNumber");
                 String userAddress = rs.getString("userAddress");
                 String userEmail = rs.getString("userEmail");
-                String roleCode = rs.getString("roleCode");
-//                String Vendor = rs.getString("Vendor");
-                users.add(new Users(userNumber,userFullName,userPhoneNumber, userAddress, userEmail,roleCode));
+                users.add(new Users(userNumber,userFullName,userPhoneNumber, userAddress, userEmail));
             }
         }catch (SQLException e){
             printSQLException(e);
@@ -53,8 +51,7 @@ public class UsersDao implements IUsersDao {
             preparedStatement.setString(2,users.getUserPhoneNumber());
             preparedStatement.setString(3,users.getUserAddress());
             preparedStatement.setString(4,users.getUserEmail());
-            preparedStatement.setString(5,users.getRoleCole());
-//            preparedStatement.setString(6,product.getVendor());
+
             preparedStatement.executeUpdate();
         }catch (SQLException e){
             printSQLException(e);
@@ -63,8 +60,24 @@ public class UsersDao implements IUsersDao {
     }
 
     @Override
-    public Users selectById(int id) {
-        return null;
+    public Users selectById(int userNumber) {
+        Users users = null ;
+        try(Connection connection = JDBCConnection.getJDBCConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USERS_BY_ID);){
+            preparedStatement.setInt(1, userNumber);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                String userFullName = rs.getString("userFullName");
+                String userPhoneNumber = rs.getString("userPhoneNumber");
+                String userAddress = rs.getString("userAddress");
+                String userEmail = rs.getString("userEmail");
+//                String Vendor = rs.getString("Vendor");
+                users = new Users(userFullName,userPhoneNumber,userAddress,userEmail);
+            }
+        } catch (SQLException ex){
+            printSQLException(ex);
+        }
+        return users;
     }
 
     @Override
@@ -77,64 +90,130 @@ public class UsersDao implements IUsersDao {
             statement.setString(3,users.getUserAddress());
             statement.setString(4,users.getUserEmail());
             statement.setInt(5,users.getUserNumber());
-//            statement.setString(6,product.getVendor());
             rowUpdate = statement.executeUpdate() > 0;
         }
         return rowUpdate;
     }
 
     @Override
-    public boolean delete(int id) throws SQLException {
+    public boolean delete(int userNumber) throws SQLException {
         boolean rowDeleted;
         try (Connection connection = JDBCConnection.getJDBCConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL);){
-            statement.setInt(1,id);
+            statement.setInt(1,userNumber);
             rowDeleted = statement.executeUpdate() > 0;
         }
         return rowDeleted;
     }
 
+//    @Override
+//    public Users findUsers() {
+//        Users users = null;
+//        try (Connection connection = JDBCConnection.getJDBCConnection();
+//        PreparedStatement preparedStatement = connection.prepareStatement(FIND_USERS);){
+//            ResultSet rs = preparedStatement.executeQuery();
+//            while (rs.next()){
+//                int userNumber = rs.getInt("userNumber");
+//                String userFullName = rs.getString("userFullName");
+//                String userPhoneNumber = rs.getString("userPhoneNumber");
+//                String userAddress = rs.getString("userAddress");
+//                String userEmail = rs.getString("userEmail");
+//                users = new Users(userNumber,userFullName,userPhoneNumber, userAddress, userEmail);
+//            }
+//
+//        } catch (SQLException ex){
+//            printSQLException(ex);
+//        }
+//        return users;
+//    }
+//
+//    @Override
+//    public Users findUsers() {
+//        return null;
+//    }
+
     @Override
-    public Users findUsers() {
+    public Users findID(int userNumber) {
         Users users = null;
-        try (Connection connection = JDBCConnection.getJDBCConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(FIND_USERS);){
+        try(Connection connection = JDBCConnection.getJDBCConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USERS);){
+            preparedStatement.setInt(1,userNumber);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
-                int userNumber = rs.getInt("userNumber");
                 String userFullName = rs.getString("userFullName");
                 String userPhoneNumber = rs.getString("userPhoneNumber");
                 String userAddress = rs.getString("userAddress");
                 String userEmail = rs.getString("userEmail");
-                String roleCode = rs.getString("roleCode");
-                users = new Users(userNumber,userFullName,userPhoneNumber, userAddress, userEmail,roleCode);
+                users =new Users(userNumber,userFullName,userPhoneNumber,userAddress,userEmail);
             }
-
         } catch (SQLException ex){
             printSQLException(ex);
         }
         return users;
     }
 
-    @Override
-    public Users findID(int id) {
-        return null;
-    }
-
-    @Override
-    public Users findName(String name) {
-        return null;
-    }
-
-    @Override
-    public Users findPhone(String phone) {
-        return null;
-    }
-
-    @Override
-    public Users findEmail(String email) {
-        return null;
-    }
+//    @Override
+//    public Users findName(String userFullName) {
+//        Users users = null;
+//        try(Connection connection = JDBCConnection.getJDBCConnection();
+//            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USERS);){
+//            preparedStatement.setString(2,userFullName);
+//            ResultSet rs = preparedStatement.executeQuery();
+//            while (rs.next()){
+//                int userNumber = rs.getInt("userNumber");
+////                String userFullName = rs.getString("userFullName");
+//                String userPhoneNumber = rs.getString("userPhoneNumber");
+//                String userAddress = rs.getString("userAddress");
+//                String userEmail = rs.getString("userEmail");
+//                users =new Users(userNumber,userFullName,userPhoneNumber,userAddress,userEmail);
+//            }
+//        } catch (SQLException ex){
+//            printSQLException(ex);
+//        }
+//        return users;
+//    }
+//
+//    @Override
+//    public Users findPhone(String userPhoneNumber) {
+//        Users users = null;
+//        try(Connection connection = JDBCConnection.getJDBCConnection();
+//            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USERS);){
+//            preparedStatement.setString(3,userPhoneNumber);
+//            ResultSet rs = preparedStatement.executeQuery();
+//            while (rs.next()){
+//                int userNumber = rs.getInt("userNumber");
+//                String userFullName = rs.getString("userFullName");
+////                String userPhoneNumber = rs.getString("userPhoneNumber");
+//                String userAddress = rs.getString("userAddress");
+//                String userEmail = rs.getString("userEmail");
+//                users =new Users(userNumber,userFullName,userPhoneNumber,userAddress,userEmail);
+//            }
+//        } catch (SQLException ex){
+//            printSQLException(ex);
+//        }
+//        return users;
+//    }
+//
+//    @Override
+//    public Users findEmail(String userEmail) {
+//        Users users = null;
+//        try(Connection connection = JDBCConnection.getJDBCConnection();
+//            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USERS);){
+//            preparedStatement.setString(4,userEmail);
+//            ResultSet rs = preparedStatement.executeQuery();
+//            while (rs.next()){
+//                int userNumber = rs.getInt("userNumber");
+//                String userFullName = rs.getString("userFullName");
+//                String userPhoneNumber = rs.getString("userPhoneNumber");
+//                String userAddress = rs.getString("userAddress");
+////                String userEmail = rs.getString("userEmail");
+//                users =new Users(userNumber,userFullName,userPhoneNumber,userAddress,userEmail);
+//            }
+//        } catch (SQLException ex){
+//            printSQLException(ex);
+//        }
+//        return users;
+//    }
 
     @Override
     public List<Users> sortName() {
@@ -148,8 +227,7 @@ public class UsersDao implements IUsersDao {
                 String userPhoneNumber = rs.getString("userPhoneNumber");
                 String userAddress = rs.getString("userAddress");
                 String userEmail = rs.getString("userEmail");
-                String roleCode = rs.getString("roleCode");
-                users.add(new Users(userNumber,userFullName,userPhoneNumber, userAddress, userEmail,roleCode));
+                users.add(new Users(userNumber,userFullName,userPhoneNumber, userAddress, userEmail));
             }
         }catch (SQLException e){
             printSQLException(e);

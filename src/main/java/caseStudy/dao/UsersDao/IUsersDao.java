@@ -7,11 +7,11 @@ import caseStudy.model.Users;
 import java.util.List;
 
 public interface IUsersDao extends IDAO<Users> {
-    Users findUsers();
+//    Users findUsers();
     Users findID(int id) ;
-    Users findName(String name) ;
-    Users findPhone(String phone) ;
-    Users findEmail(String email) ;
+//    Users findName(String name) ;
+//    Users findPhone(String phone) ;
+//    Users findEmail(String email) ;
     List<Users> sortName();
 
 

@@ -31,7 +31,11 @@ public class UsersServlet extends HttpServlet {
                     updateUsers(request, response);
                     break;
                 case "search":
-                    findUsers(request, response);
+//                    findUsers(request, response);
+                    findID(request,response);
+//                    findName(request,response);
+//                    findPhone(request,response);
+//                    findEmail(request,response);
                     break;
             }
         }
@@ -39,6 +43,36 @@ public class UsersServlet extends HttpServlet {
             throw new ServletException();
         }
     }
+
+    private void findID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int userNumber = Integer.parseInt(request.getParameter("userNumber"));
+        Users usersList = usersDao.findID(userNumber);
+        request.setAttribute("usersList", usersList);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("users/view.jsp");
+        dispatcher.forward(request,response);
+    }
+//    private void findName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String userFullName = request.getParameter("userFullName");
+//        Users usersList = usersDao.findName(userFullName);
+//        request.setAttribute("usersList", usersList);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("users/view.jsp");
+//        dispatcher.forward(request,response);
+//    }
+//    private void findPhone(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String userPhoneNumber = request.getParameter("id");
+//        Users usersList = usersDao.findPhone(userPhoneNumber);
+//        request.setAttribute("usersList", usersList);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("users/view.jsp");
+//        dispatcher.forward(request,response);
+//    }
+//    private void findEmail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String userEmail  = request.getParameter("id");
+//        Users usersList = usersDao.findEmail(userEmail);
+//        request.setAttribute("usersList", usersList);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("users/view.jsp");
+//        dispatcher.forward(request,response);
+//    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             String action = request.getParameter("action");
             if (action == null){
@@ -58,9 +92,7 @@ public class UsersServlet extends HttpServlet {
                     case "sortName":
                         sortUsersName(request, response);
                         break;
-//                    case "sortDESC":
-//                        sortProductDESC(request, response);
-//                        break;
+//
                     default:
                         listUsers(request,response);
                         break;
@@ -75,7 +107,7 @@ public class UsersServlet extends HttpServlet {
             throws ServletException, IOException {
         List<Users> usersList = usersDao.selectAll();
         request.setAttribute("usersList",usersList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Users/view.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("users/view.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -85,16 +117,15 @@ public class UsersServlet extends HttpServlet {
         String userPhoneNumber = request.getParameter("userPhoneNumber");
         String userAddress = request.getParameter("userAddress");
         String userEmail = request.getParameter("userEmail");
-        String roleCode = request.getParameter("roleCode");
 //        String Vendor = request.getParameter("Vendor");
-        Users users = new Users(userFullName, userPhoneNumber, userAddress,userEmail,roleCode);
+        Users users = new Users(userFullName, userPhoneNumber, userAddress,userEmail);
         usersDao.insert(users);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Users/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("users/create.jsp");
         dispatcher.forward(request,response);
     }
     
     private void showNewUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Users/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("users/create.jsp");
         dispatcher.forward(request,response);
     }
 
@@ -106,17 +137,15 @@ public class UsersServlet extends HttpServlet {
         String userPhoneNumber = request.getParameter("userPhoneNumber");
         String userAddress = request.getParameter("userAddress");
         String userEmail = request.getParameter("userEmail");
-        String roleCode = request.getParameter("roleCode");
-//        String Vendor = request.getParameter("Vendor");
-        Users users = new Users(userNumber, userFullName, userPhoneNumber, userAddress,userEmail,roleCode);
+        Users users = new Users(userNumber, userFullName, userPhoneNumber, userAddress,userEmail);
         usersDao.update(users);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Users/update.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("users/update.jsp");
         dispatcher.forward(request,response);
     }
     private void showUpdateUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int userNumber = Integer.parseInt(request.getParameter("userNumber"));
         Users existingUsers =  usersDao.selectById(userNumber);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Users/update.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("users/update.jsp");
         request.setAttribute("showUpdate",existingUsers);
         dispatcher.forward(request,response);
     }
@@ -127,32 +156,24 @@ public class UsersServlet extends HttpServlet {
         usersDao.delete(userNumber);
         List<Users> usersList = usersDao.selectAll();
         request.setAttribute("usersList",usersList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Users/view.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("users/view.jsp");
         dispatcher.forward(request, response);
     }
 
-    private void findUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        int id = Integer.parseInt(request.getParameter("id"));
-        Users usersList = usersDao.findUsers();
-        request.setAttribute("usersList", usersList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Users/view.jsp");
-        dispatcher.forward(request,response);
-
-    }
+//    private void findUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+////        int id = Integer.parseInt(request.getParameter("id"));
+//        Users usersList = usersDao.findUsers();
+//        request.setAttribute("usersList", usersList);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("users/view.jsp");
+//        dispatcher.forward(request,response);
+//
+//    }
 
 
     private void sortUsersName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Users> usersList = usersDao.sortName();
         request.setAttribute("usersList",usersList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Users/view.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("users/view.jsp");
         dispatcher.forward(request,response);
     }
-
-
-//    private void sortProductDESC(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        List<Product> usersList = usersDao.sortPriceDESC();
-//        request.setAttribute("usersList",usersList);
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/users/view.jsp");
-//        dispatcher.forward(request,response);
-//    }
 }
