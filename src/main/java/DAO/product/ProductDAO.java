@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProductDAO implements IProductDAO {
     private static final String INSERT_PRODUCT_SQL ="INSERT INTO Product" +
-            " (productName,price,description,imgURL,Vendor) (?,?,?,?,?);";
+            " (productName,price,description,imgURL,Vendor) values (?,?,?,?,?);";
     private static final String SELECT_PRODUCT_BY_ID = "select productName,price,description,imgURL, Vendor from Product where id =?";
     private static final String SELECT_ALL_PRODUCT = "select * from Product";
     private static final String DELETE_PRODUCT_BY_ID_SQL = "delete from Product where id = ?;";
@@ -102,17 +102,17 @@ public class ProductDAO implements IProductDAO {
     }
 
     @Override
-    public void updateProduct(Product product) throws SQLException {
+    public boolean updateProduct(Product product) throws SQLException {
         boolean rowUpdated;
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_SQL);
 
         preparedStatement.setString(1, product.getProductName());
         preparedStatement.setLong(2, product.getPrice());
-        preparedStatement.setString(3, product.getProductPrice());
-        preparedStatement.setString(4, product.getProductImage());
-        preparedStatement.setString(5, product.getProductLine());
-        preparedStatement.setString(6, product.getProductCode());
+        preparedStatement.setString(3, product.getDescription());
+        preparedStatement.setString(4, product.getImgURL());
+        preparedStatement.setString(5, product.getVendor());
+        preparedStatement.setInt(6, product.getId());
 
         rowUpdated = preparedStatement.executeUpdate() > 0;
 
