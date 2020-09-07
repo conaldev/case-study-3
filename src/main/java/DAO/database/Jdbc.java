@@ -2,8 +2,8 @@ package DAO.database;
 
 public class Jdbc {
     private  String jdbcURL = "jdbc:mysql://localhost:3306/webLaptop?useSSL=false";
-    private  String jdbcUser = "rootcs";
-    private  String jdbcPassword = "12345678";
+    private  String jdbcUser = "root";
+    private  String jdbcPassword = "123456";
     private static volatile Jdbc instance;
     public static Jdbc getInstance(){
         if(instance==null){

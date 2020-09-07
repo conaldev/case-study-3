@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO implements IProductDAO {
-    private static final String INSERT_PRODUCT_SQL ="INSERT INTO Product" +
+    private static final String INSERT_PRODUCT_SQL ="INSERT INTO product" +
             " (productName,price,description,imgURL,Vendor) values (?,?,?,?,?);";
     private static final String SELECT_PRODUCT_BY_ID = "select productName,price,description,imgURL, Vendor from Product where id =?";
-    private static final String SELECT_ALL_PRODUCT = "select * from Product";
+    private static final String SELECT_ALL_PRODUCT = "select * from product;";
     private static final String DELETE_PRODUCT_BY_ID_SQL = "delete from Product where id = ?;";
     private static final String UPDATE_PRODUCT_SQL = "update Product set productName = ?,price= ?, description =?,imgURL=?, Vendor = ? where id = ?;";
 
