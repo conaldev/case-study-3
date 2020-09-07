@@ -28,7 +28,7 @@ public class AccountDAO implements IAccountDAO {
         return connection;
     }
     @Override
-    public boolean innsertAccount(Account account) throws SQLException {
+    public boolean insertAccount(Account account) throws SQLException {
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ACCOUNT_SQL);
         try {

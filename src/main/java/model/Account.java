@@ -7,6 +7,11 @@ public class Account {
 
     public Account(){}
 
+    public Account(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public Account(String email, String password, int roleNumber) {
         this.email = email;
         this.password = password;

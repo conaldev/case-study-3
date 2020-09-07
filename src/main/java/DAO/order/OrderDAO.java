@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OderDAO implements IOrderDAO {
+public class OrderDAO implements IOrderDAO {
 
     private static final String GET_ORDER = "select max(orderNumber) from Orderdetail;";
 

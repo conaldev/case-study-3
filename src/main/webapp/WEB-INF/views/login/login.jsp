@@ -18,8 +18,8 @@
     <h2>Login</h2>
     <form action="/login" method="post">
         <div class="form-group">
-            <label for="username">Email:</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" placeholder="Enter email" name="email" required>
         </div>
         <div class="form-group">
             <label for="pwd">Password:</label>
@@ -27,7 +27,7 @@
         </div>
         <input type="hidden" name="action" value="login">
         <button type="submit" class="btn btn-primary">Login</button>
-        <a type="button" class="btn btn-primary" href="/customers?action=create" >Create new</a>
+        <a type="button" class="btn btn-primary" href="/login?action=signup" >Sign Up?</a>
         <a type="button" class="btn btn-primary" href="/login?action=changepassword" >Change password</a>
         <c:out value="${message}"></c:out>
     </form>
