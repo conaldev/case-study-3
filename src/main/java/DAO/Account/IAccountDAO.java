@@ -4,7 +4,7 @@ import model.Account;
 
 import java.sql.SQLException;
 
-public interface IAccount {
+public interface IAccountDAO {
      boolean innsertAccount(Account account) throws SQLException;
      boolean checkAccount(Account account) throws SQLException;
      boolean changePassword(Account account,String newPassword) throws SQLException;

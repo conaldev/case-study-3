@@ -5,7 +5,7 @@ import model.Account;
 
 import java.sql.*;
 
-public class AccountDAO implements IAccount{
+public class AccountDAO implements IAccountDAO {
     private static final String INSERT_ACCOUNT_SQL = "INSERT INTO Accounts (email, password) VALUES " +
             " (?, ?);";
 
