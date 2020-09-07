@@ -3,7 +3,7 @@ package model;
 public class Order {
     private int orderNumber;
     private int productID;
-    private int quanityOrdered;
+    private int quantityOrdered;
     private long priceProduct;
     private int cusNumber;
     private String orderDate;
@@ -11,10 +11,10 @@ public class Order {
 
     public Order(){}
 
-    public Order(int orderNumber, int productID, int quanityOrdered, long priceProduct, int cusNumber, String orderDate, String status) {
+    public Order( int productID,int orderNumber, int quantityOrdered, long priceProduct,String orderDate,  int cusNumber, String status) {
         this.orderNumber = orderNumber;
         this.productID = productID;
-        this.quanityOrdered = quanityOrdered;
+        this.quantityOrdered = quantityOrdered;
         this.priceProduct = priceProduct;
         this.cusNumber = cusNumber;
         this.orderDate = orderDate;
@@ -37,12 +37,12 @@ public class Order {
         this.productID = productID;
     }
 
-    public int getQuanityOrdered() {
-        return quanityOrdered;
+    public int getQuantityOrdered() {
+        return quantityOrdered;
     }
 
-    public void setQuanityOrdered(int quanityOrdered) {
-        this.quanityOrdered = quanityOrdered;
+    public void setQuanityOrdered(int quantityOrdered) {
+        this.quantityOrdered = quantityOrdered;
     }
 
     public long getPriceProduct() {
