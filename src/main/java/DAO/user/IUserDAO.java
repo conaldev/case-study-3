@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserDAO {
-         boolean insertCustomer(User user) throws SQLException;
+         boolean insertUser(User user) throws SQLException;
 
-         User selectUser(int id) throws SQLException;
+         User selectUserById(int id) throws SQLException;
 
-         User selectCustomer(String userEmail) throws SQLException;
+         User selectUserByEmail(String userEmail) throws SQLException;
 
          List<User> selectAllUsers() throws SQLException;
 

@@ -3,9 +3,8 @@ package DAO.user;
 import DAO.database.Jdbc;
 import model.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO implements IUserDAO{
@@ -37,32 +36,96 @@ public class UserDAO implements IUserDAO{
     }
 
     @Override
-    public boolean insertCustomer(User user) throws SQLException {
-        return false;
+    public boolean insertUser(User user) throws SQLException {
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_SQL);
+        try {
+            System.out.println("creating new User");
+            preparedStatement.setString(1,user.getUserFullName());
+            preparedStatement.setString(2,user.getUserPhoneNumber());
+            preparedStatement.setString(3,user.getUserAddress());
+            preparedStatement.setString(4,user.getUserEmail());
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return preparedStatement.executeUpdate() > 0;
     }
 
     @Override
-    public User selectUser(int id) throws SQLException {
-        return null;
+    public User selectUserById(int userNumber) throws SQLException {
+        User user = null;
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID_SQL);
+        preparedStatement.setInt(1,userNumber);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()){
+            String userFullName = resultSet.getString("userFullName");
+            String userPhoneNumber = resultSet.getString("userPhoneNumber");
+            String userAddress = resultSet.getString("userAddress");
+            String userEmail = resultSet.getString("userEmail");
+            user = new User(userNumber,userFullName,userPhoneNumber,userAddress,userEmail);
+        }
+        return user;
     }
 
     @Override
-    public User selectCustomer(String userEmail) throws SQLException {
-        return null;
+    public User selectUserByEmail(String userEmail) throws SQLException {
+        User user = null;
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_EMAIL_SQL);
+        preparedStatement.setString(1,userEmail);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()){
+            String userFullName = resultSet.getString("userFullName");
+            String userPhoneNumber = resultSet.getString("userPhoneNumber");
+            String userAddress = resultSet.getString("userAddress");
+            int userNumber = resultSet.getInt("userNumber");
+            user = new User(userNumber,userFullName,userPhoneNumber,userAddress,userEmail);
+        }
+        return user;
     }
 
     @Override
     public List<User> selectAllUsers() throws SQLException {
-        return null;
+        List<User> users = new ArrayList<>();
+
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USER_SQL);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            int userNumber = resultSet.getInt("userNumber");
+            String userFullName = resultSet.getString("userFullName");
+            String userPhoneNumber = resultSet.getString("userPhoneNumber");
+            String userAddress = resultSet.getString("userAddress");
+            String userEmail = resultSet.getString("userEmail");
+            users.add(new User(userNumber,userFullName,userPhoneNumber,userAddress,userEmail));
+        }
+        return users;
     }
 
     @Override
     public boolean deleteUser(int id) throws SQLException {
-        return false;
+        boolean rowDeleted ;
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(DELETE_USER_BY_ID_SQL);
+        statement.setInt(1,id);
+        rowDeleted = statement.executeUpdate() > 0;
+        return rowDeleted;
     }
 
     @Override
     public boolean updateUser(User user) throws SQLException {
-        return false;
+        boolean rowUpdated;
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_SQL);
+        preparedStatement.setString(1,user.getUserFullName());
+        preparedStatement.setString(2,user.getUserPhoneNumber());
+        preparedStatement.setString(3,user.getUserAddress());
+        preparedStatement.setString(4,user.getUserEmail());
+        preparedStatement.setInt(5,user.getUserNumber());
+        rowUpdated = preparedStatement.executeUpdate() > 0;
+        return rowUpdated;
     }
 }
