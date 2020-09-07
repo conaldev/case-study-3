@@ -1,16 +1,23 @@
+<<<<<<< HEAD
 
 <%--
 =======
 <%@ page import="model.List" %><%--
 >>>>>>> 337e8f699f2ec9bf803741269a52631ebeb78d00
+=======
+<%--
+>>>>>>> 630c03403dba5ff4441162ade0ce96da33efd009
   Created by IntelliJ IDEA.
   User: conal
-  Date: 03/09/2020
-  Time: 20:40
+  Date: 04/09/2020
+  Time: 15:09
   To change this template use File | Settings | File Templates.
 --%>
+<<<<<<< HEAD
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+=======
+>>>>>>> 630c03403dba5ff4441162ade0ce96da33efd009
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
@@ -43,6 +50,7 @@
     <![endif]-->
 </head>
 <body>
+<<<<<<< HEAD
 
 <div class="header-area">
     <div class="container">
@@ -404,5 +412,8 @@
 <!-- Slider -->
 <script type="text/javascript" src="ustora/ustora/js/bxslider.min.js"></script>
 <script type="text/javascript" src="ustora/ustora/js/script.slider.js"></script>
+=======
+    jlkajsflkasf
+>>>>>>> 630c03403dba5ff4441162ade0ce96da33efd009
 </body>
 </html>
