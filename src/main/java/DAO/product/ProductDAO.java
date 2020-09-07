@@ -1,16 +1,13 @@
-package DAO;
+package DAO.product;
 
+import DAO.Jdbc;
 import model.Product;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDAO implements IProductDAO{
-    private  String jdbcURL = "jdbc:mysql://localhost:3306/webLaptop?useSSL=false";
-    private  String jdbcUser = "rootcs";
-    private  String jdbcPassword = "12345678";
-
+public class ProductDAO implements IProductDAO {
     private static final String INSERT_PRODUCT_SQL ="INSERT INTO Product" +
             " (productName,price,description,imgURL,Vendor) (?,?,?,?,?);";
     private static final String SELECT_PRODUCT_BY_ID = "select productName,price,description,imgURL, Vendor from Product where id =?";
@@ -22,8 +19,8 @@ public class ProductDAO implements IProductDAO{
     protected Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(jdbcURL,jdbcUser,jdbcPassword);
+            Class.forName("DAO.Jdbc.Driver");
+            connection = DriverManager.getConnection(Jdbc.getInstance().getJdbcURL(), Jdbc.getInstance().getJdbcUser(), Jdbc.getInstance().getJdbcPassword());
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
