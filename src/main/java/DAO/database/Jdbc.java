@@ -1,4 +1,4 @@
-package DAO;
+package DAO.database;
 
 public class Jdbc {
     private  String jdbcURL = "jdbc:mysql://localhost:3306/webLaptop?useSSL=false";

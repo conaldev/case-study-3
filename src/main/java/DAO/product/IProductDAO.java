@@ -9,6 +9,6 @@ public interface IProductDAO {
     void insertProduct(Product product) throws SQLException;
     Product selectProduct(int id);
     List<Product> selectAllProduct();
-    void deleteProduct(int id) throws SQLException;
+    boolean deleteProduct(int id) throws SQLException;
     void updateProduct(Product product) throws SQLException;
 }
