@@ -10,4 +10,5 @@ public interface IAccountDAO {
      boolean changePassword(Account account,String newPassword) throws SQLException;
      boolean checkAdmin(Account account) throws SQLException;
      boolean deleteAccount(Account account) throws SQLException;
+     Account selectAccountByEmail(String email) throws SQLException;
 }

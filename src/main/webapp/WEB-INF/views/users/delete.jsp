@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Title</title>
@@ -15,24 +16,23 @@
     <form method="post">
         <table border="1" cellpadding="5">
             <caption><h2>Delete User Confirm</h2></caption>
+            <a href="/users">Back to UserList</a>
             <c:out value="${status}"></c:out>
             <c:if test="${user != null}">
                 <tr>
                     <th>Number</th>
                     <th>Full Name</th>
                     <th>Phone Number</th>
-                    <th>Phone</th>
                     <th>Address</th>
                     <th>Email</th>
 
                 </tr>
                 <tr>
-                    <td><c:out value="${customer.getCusNumber()}"/></td>
-                    <td><c:out value="${customer.userName}"/></td>
-                    <td><c:out value="${customer.cusName}"/></td>
-                    <td><c:out value="${customer.cusPhoneNumber}"/></td>
-                    <td><c:out value="${customer.cusAddress}"/></td>
-                    <td><c:out value="${customer.cusEmail}"/></td>
+                    <td><c:out value="${user.getUserNumber()}"/></td>
+                    <td><c:out value="${user.getUserFullName()}"/></td>
+                    <td><c:out value="${user.getUserPhoneNumber()}"/></td>
+                    <td><c:out value="${user.getUserAddress()}"/></td>
+                    <td><c:out value="${user.getUserEmail()}"/></td>
                 </tr>
             </c:if>
 

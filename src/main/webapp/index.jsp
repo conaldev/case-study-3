@@ -11,5 +11,6 @@
 <a href="/products">Home</a></br>
 <a href="/login">login</a></br>
 <a href="/index">index</a></br>
+<a href="/users">users</a></br>
 </body>
 </html>

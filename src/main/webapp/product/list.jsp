@@ -21,6 +21,7 @@
             <th>IMG</th>
             <th>Price</th>
             <th>Description</th>
+            <th>Vendor</th>
             <th>Action</th>
         </tr>
         <c:forEach var="product" items="${listProduct}">
@@ -30,6 +31,8 @@
                 <td><img src="<c:url value="${product.imgURL}"/>" alt="image" width="100px" height="100px"></td>
                 <td><c:out value="${product.price}đ"/></td>
                 <td><c:out value="${product.description}"/></td>
+                <td><c:out value="${product.vendor}"/></td>
+
                 <td>
                     <a href="/products?action=edit&id=${product.id}">Edit</a>
                     <a href="/products?action=delete&id=${product.id}">Delete</a>

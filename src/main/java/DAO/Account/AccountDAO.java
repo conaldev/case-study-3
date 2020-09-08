@@ -2,6 +2,7 @@ package DAO.Account;
 
 import DAO.database.Jdbc;
 import model.Account;
+import model.User;
 
 import java.sql.*;
 
@@ -16,6 +17,7 @@ public class AccountDAO implements IAccountDAO {
     private static final String GET_ROLE = "SELECT role from Accounts  where email = ?;";
 
     private static final String DELETE_ACCOUNT_BY_EMAIL = "delete from Accounts where email = ?;";
+    private static final String SELECT_ACCOUNT_BY_EMAIL = "select * from Accounts where email = ?;";
 
     protected Connection getConnection() {
         Connection connection = null;
@@ -93,5 +95,21 @@ public class AccountDAO implements IAccountDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ACCOUNT_BY_EMAIL);
         preparedStatement.setString(1, account.getEmail());
         return preparedStatement.executeUpdate() > 0;
+    }
+
+    @Override
+    public Account selectAccountByEmail(String email) throws SQLException {
+        Account account = null;
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ACCOUNT_BY_EMAIL);
+        preparedStatement.setString(1,email);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()){
+            String password = resultSet.getString("password");
+            int role = resultSet.getInt("role");
+            account = new Account(email,password,role);
+        }
+        return account;
     }
 }

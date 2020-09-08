@@ -6,13 +6,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
 <div align="center">
-    <form method="post">
+    <form method="post" action="/users?action=create">
         <table border="1" cellpadding="5">
             <caption>
                 <h2>NEW USER </h2>
@@ -23,12 +24,6 @@
                 <th>User Full Name:</th>
                 <td>
                     <input type="text" name="userFullName" id="userFullName" size="50" required/>
-                </td>
-            </tr>
-            <tr>
-                <th>Full Name:</th>
-                <td>
-                    <input type="text" name="cusName" id="cusName" size="50" required/>
                 </td>
             </tr>
             <tr>
@@ -47,6 +42,12 @@
                 <th>Email:</th>
                 <td>
                     <input type="email" name="userEmail" id="userEmail" size="50"/>
+                </td>
+            </tr>
+            <tr>
+                <th>Password:</th>
+                <td>
+                    <input type="password" name="password" id="password" size="50"/>
                 </td>
             </tr>
             <tr>
