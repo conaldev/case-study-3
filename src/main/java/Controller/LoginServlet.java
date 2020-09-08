@@ -31,7 +31,6 @@ public class LoginServlet extends HttpServlet {
                 case "login":
                     doLogin(request, response);
                     break;
-
                 case "changepassword":
                     changePass(request, response);
                     break;
@@ -44,6 +43,33 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
+
+
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+
+        try {
+            switch (action) {
+                case "changepassword":
+                    System.out.println("go to Change Password Form .....");
+                    showChangePasswordForm(request, response);
+                    break;
+                case "signup":
+                    System.out.println("....go to sign up Form.....");
+                    showSignUpForm(request,response);
+                    break;
+                default:
+                    showLogin(request, response);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void createAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String newEmail = request.getParameter("email");
         String newPassword = request.getParameter("password");
@@ -66,38 +92,6 @@ public class LoginServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("webapp/WEB-INF/views/login/SignUp.jsp");
         dispatcher.forward(request, response);
     }
-
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if (action == null) {
-            action = "";
-        }
-
-        try {
-            switch (action) {
-                case "changepassword":
-                    System.out.println("go to Change Password Form .....");
-                    showChangePasswordForm(request, response);
-                    break;
-                case "signup":
-                    System.out.println("....go to sign up Form.....");
-                    showSignUpForm(request,response);
-                default:
-                    showLogin(request, response);
-                    break;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void showSignUpForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/login/SignUp.jsp");
-        dispatcher.forward(request, response);
-    }
-
-
     private void changePass(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -126,6 +120,11 @@ public class LoginServlet extends HttpServlet {
         dispatcher.forward(request, response);
 
     }
+    private void showSignUpForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/login/SignUp.jsp");
+        dispatcher.forward(request, response);
+    }
+
 
     private void showChangePasswordForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/login/changepassword.jsp");
@@ -141,26 +140,27 @@ public class LoginServlet extends HttpServlet {
         System.out.println("password = " + password);
         String message = "";
         RequestDispatcher dispatcher = null;
-        List<Product> productList = daoManager.productDAO.selectAllProduct();
+        List<Product> listProduct = daoManager.productDAO.selectAllProduct();
         User user = daoManager.userDAO.selectUserByEmail(email);
 
         if (daoManager.accountDAO.checkAccount(account)) {
-            request.setAttribute("productList", productList);
-            request.setAttribute("user", user);
+            request.setAttribute("listProduct", listProduct);
+//            request.setAttribute("user", user);
             request.setAttribute("daoManager",daoManager);
 
-            dispatcher = request.getRequestDispatcher("WEB-INF/views/home/index.jsp");
+//            dispatcher = request.getRequestDispatcher("WEB-INF/views/home/index.jsp");
+            dispatcher = request.getRequestDispatcher("product/list.jsp");
             System.out.println("LOG IN SUCCESS !");
             message = "LOG IN SUCCESS !";
             if (daoManager.accountDAO.checkAdmin(account)) {
                 System.out.println(account + "is admin account");
-                dispatcher = request.getRequestDispatcher("WEB-INF/views/home/index.jsp");
+                dispatcher = request.getRequestDispatcher("product/list.jsp");
             } else {
                 System.out.println(account + " is not admin account");
 
             }
         } else {
-            dispatcher = request.getRequestDispatcher("WEB-INF/views/login/login.jsp");
+            dispatcher = request.getRequestDispatcher("product/list.jsp");
             System.out.println("Wrong password or email !");
             message = "Wrong password or email !";
         }

@@ -23,8 +23,8 @@
             <label for="pwd">Password:</label>
             <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
         </div>
-        <input type="hidden" name="action" value="login">
-        <a type="submit" class="btn btn-primary">Sign Up</a>
+        <input type="hidden" name="action" value="signup">
+        <button type="submit" class="btn btn-primary">Sign Up</button>
         <a type="button" class="btn btn-primary" href="/login">Back to login</a>
         <p><c:out value="status: ${status}"></c:out></p>
     </form>
