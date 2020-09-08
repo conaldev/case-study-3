@@ -17,6 +17,7 @@ import java.util.List;
 public class ProductServlet extends HttpServlet {
     private ProductDAO productDAO;
     public void init() {
+
         productDAO = new ProductDAO();
     }
 
