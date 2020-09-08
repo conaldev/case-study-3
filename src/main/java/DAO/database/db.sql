@@ -27,9 +27,7 @@ CREATE TABLE `Accounts` (
   `password` varchar(50) NOT NULL,
   `role` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`email`),
-  UNIQUE KEY `email_UNIQUE` (`email`),
-  KEY `Accounts_ibfk_1` (`role`),
-  CONSTRAINT `Accounts_ibfk_1` FOREIGN KEY (`role`) REFERENCES `Users` (`userNumber`)
+  UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -39,6 +37,7 @@ CREATE TABLE `Accounts` (
 
 LOCK TABLES `Accounts` WRITE;
 /*!40000 ALTER TABLE `Accounts` DISABLE KEYS */;
+INSERT INTO `Accounts` VALUES ('admin','1234',0);
 /*!40000 ALTER TABLE `Accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,4 +168,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-07 12:01:49
+-- Dump completed on 2020-09-08  8:32:41
